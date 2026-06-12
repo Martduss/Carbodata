@@ -93,6 +93,8 @@ class MessagesController < ApplicationController
   - Never use code blocks, only markdown."
 
 
+  before_action :authenticate_user!
+
   def create
     @chat = current_user.chats.find(params[:chat_id])
     @message = Message.new(message_params)
@@ -117,8 +119,8 @@ class MessagesController < ApplicationController
   end
 
   def save_recipe
-    @message = Message.find(params[:id])
-    @chat = @message.chat
+    @chat = current_user.chats.find(params[:chat_id])
+    @message = @chat.messages.find(params[:id])
 
     # Only save if the message is from the assistant
     if @message.role == "assistant"

@@ -1,0 +1,9 @@
+assistant_message:
+  role: assistant
+  content: "### Salade de pois chiches\n*Une salade fraîche.*\n\n**IG:** 47 🙂    **Carbs:** 15g/100g    **Difficulty:** 2"
+  chat: alice_chat
+
+user_message:
+  role: user
+  content: "Give me a low-GI recipe"
+  chat: alice_chat
