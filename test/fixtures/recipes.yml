@@ -1,0 +1,17 @@
+alice_private_recipe:
+  name: Alice Private Soup
+  description: A private soup
+  indice_gly: 40
+  ratio_glucide: 10
+  difficulty: 2
+  visibility: 0
+  user: alice
+
+alice_shared_recipe:
+  name: Alice Shared Salad
+  description: A salad for everyone
+  indice_gly: 35
+  ratio_glucide: 8
+  difficulty: 1
+  visibility: 1
+  user: alice

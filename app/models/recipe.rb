@@ -7,6 +7,12 @@ class Recipe < ApplicationRecord
 
   has_one_attached :photo
 
+  enum :visibility, { private_recipe: 0, shared: 1 }, default: :private_recipe
+
+  scope :accessible_by, ->(user) {
+    where(user: user).or(where(visibility: :shared))
+  }
+
   DEFAULT_IMAGE_URL = "https://res.cloudinary.com/dvoeovqth/image/upload/recette_default_rwy5jj.jpg".freeze
   pg_search_scope :search_by_name_description_difficulty_indice_gly, {
     against: {name: 'A', description: 'B', difficulty: 'B', indice_gly: 'B'},

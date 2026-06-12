@@ -1,6 +1,7 @@
 class RecipesController < ApplicationController
   before_action :authenticate_user!
   before_action :set_recipe, only: [:show, :edit, :update, :destroy]
+  before_action :require_owner!, only: [:edit, :update, :destroy]
 
   def index
     if params[:query].present?
@@ -35,12 +36,10 @@ class RecipesController < ApplicationController
   end
 
   def update
-    @recipe.update(recipe_params)
-    @user = current_user
-    if @recipe.save!
+    if @recipe.update(recipe_params)
       redirect_to recipes_path, notice: "Recipe has been updated"
     else
-      render :new, unprocessable_entity
+      render :edit, status: :unprocessable_entity
     end
   end
 
@@ -55,10 +54,14 @@ class RecipesController < ApplicationController
   private
 
   def recipe_params
-    params.require(:recipe).permit(:name, :description, :steps, :difficulty, :indice_gly, :ratio_glucide, :photo)
+    params.require(:recipe).permit(:name, :description, :steps, :difficulty, :indice_gly, :ratio_glucide, :photo, :visibility)
   end
 
   def set_recipe
-    @recipe = Recipe.find(params[:id])
+    @recipe = Recipe.accessible_by(current_user).find(params[:id])
+  end
+
+  def require_owner!
+    redirect_to recipes_path, alert: "You are not authorized to modify this recipe." unless @recipe.user == current_user
   end
 end
