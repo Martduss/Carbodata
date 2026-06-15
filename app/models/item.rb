@@ -7,6 +7,10 @@ class Item < ApplicationRecord
 
   has_one_attached :photo
 
+  validates :name, presence: true, length: { maximum: 100 }
+  validates :indice_gly, numericality: { only_integer: true, greater_than_or_equal_to: 1, less_than_or_equal_to: 100 }, allow_nil: true
+  validates :ratio_glucide, numericality: { only_integer: true, greater_than_or_equal_to: 1, less_than_or_equal_to: 100 }, allow_nil: true
+
   pg_search_scope :search_by_name_description_difficulty_indice_gly, {
     against: {name: 'A', brand: 'B', category: 'B', indice_gly: 'B', ratio_glucide: 'B'},
     using: {
@@ -21,12 +25,14 @@ class Item < ApplicationRecord
   end
 
   def gi_level
+    return nil if indice_gly.nil?
     return 'low' if indice_gly < 55
     return 'medium' if indice_gly <= 70
     'high'
   end
 
   def gi_stars
+    return nil if indice_gly.nil?
     return 5 if indice_gly < 40
     return 4 if indice_gly < 55
     return 3 if indice_gly < 70
@@ -35,6 +41,7 @@ class Item < ApplicationRecord
   end
 
   def carb_stars
+    return nil if ratio_glucide.nil?
     return 5 if ratio_glucide < 20
     return 4 if ratio_glucide < 35
     return 3 if ratio_glucide < 50

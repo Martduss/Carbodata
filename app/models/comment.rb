@@ -3,6 +3,8 @@ class Comment < ApplicationRecord
   belongs_to :post
   has_many :votes, as: :votable, dependent: :destroy
 
+  validates :content, presence: true, length: { maximum: 1000 }
+
   scope :by_score, -> {
     left_joins(:votes)
       .group(:id)

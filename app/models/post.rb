@@ -8,6 +8,9 @@ class Post < ApplicationRecord
 
   multisearchable against: [:title, :content]
 
+  validates :title, presence: true, length: { maximum: 100 }
+  validates :content, presence: true, length: { maximum: 5000 }
+
   # Calcule le score total du post (upvotes - downvotes)
   def score
     votes.sum(:value)

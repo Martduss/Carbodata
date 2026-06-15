@@ -1,0 +1,4 @@
+alice_post:
+  title: Mon post de test
+  content: Un contenu valide pour ce post.
+  user: alice
