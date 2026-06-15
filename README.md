@@ -1,1 +1,143 @@
-Rails app generated with [lewagon/rails-templates](https://github.com/lewagon/rails-templates), created by the [Le Wagon coding bootcamp](https://www.lewagon.com) team.
+# CarboData
+
+A full-stack web application that helps people with diabetes discover, create, and manage low-glycemic recipes — powered by an AI assistant that generates personalized meal plans.
+
+> Built as a final project at [Le Wagon](https://www.lewagon.com) coding bootcamp (2 weeks, team of 4).
+
+---
+
+## Screenshots
+
+<!-- Replace the images below with actual screenshots -->
+
+| Feed                                   | Recipe Manager                             | SuperCarbo AI                          |
+| -------------------------------------- | ------------------------------------------ | -------------------------------------- |
+| ![Feed](docs/screenshots/feed.png)     | ![Recipes](docs/screenshots/recipes.png)   | ![Chat](docs/screenshots/chat.png)     |
+
+---
+
+## Features
+
+- **Recipe manager** — Create and organize recipes by glycemic index (GI) with automatic low/medium/high classification
+- **AI chatbot "SuperCarbo"** — Chat with an OpenAI-powered assistant that generates diabetic-friendly recipes based on ingredients you select; responses stream in real time
+- **Social feed** — Share posts with the community, comment, and vote (upvote/downvote)
+- **CarboDucts** — Manage individual food items with GI and carb data to use as inputs for AI recipe generation
+- **Shared recipes** — Recipes can be kept private or published to your public profile
+- **Full-text search** — Search across recipes, items, and posts via PostgreSQL full-text search
+
+---
+
+## Tech Stack
+
+| Layer            | Technology                                      |
+| ---------------- | ----------------------------------------------- |
+| Backend          | Ruby 3.3.5, Rails 7.1                           |
+| Database         | PostgreSQL + PgSearch (full-text)               |
+| Authentication   | Devise                                          |
+| Frontend         | Hotwire (Turbo + Stimulus), Bootstrap 5         |
+| AI               | OpenAI API via RubyLLM                          |
+| Real-time        | Action Cable + Solid Queue (streaming LLM)      |
+| File storage     | Cloudinary + Active Storage                     |
+| Asset pipeline   | Sprockets + ImportMap                           |
+
+---
+
+## Architecture Highlights
+
+**Real-time AI streaming** — LLM responses are generated asynchronously in a background job (`GenerateLlmResponseJob`) and streamed token by token to the browser via Turbo Streams and Action Cable, giving a ChatGPT-like experience.
+
+**Polymorphic voting** — A single `Vote` model handles upvotes/downvotes on both posts and comments using Rails polymorphic associations, avoiding duplicated logic.
+
+**Recipe visibility** — Recipes use an enum (`private_recipe` / `shared`) so users control what appears on their public profile. Authorization is split: anyone can read shared recipes, only the owner can edit or delete.
+
+**GI-based classification** — Recipes and food items are classified into low/medium/high glycemic index tiers. The index page loads all recipes in a single query and partitions in Ruby, avoiding N+1 queries.
+
+---
+
+## Getting Started
+
+### Prerequisites
+
+- Ruby 3.3.5
+- PostgreSQL
+- A Cloudinary account (free tier works)
+- An OpenAI API key
+
+### Installation
+
+```bash
+git clone https://github.com/martduss/Carbodata.git
+cd Carbodata
+bundle install
+```
+
+### Environment variables
+
+Copy the example file and fill in your own values:
+
+```bash
+cp .env.example .env
+```
+
+| Variable                  | Description                                                    |
+| ------------------------- | -------------------------------------------------------------- |
+| `OPENAI_API_KEY`          | Your OpenAI API key                                            |
+| `CLOUDINARY_URL`          | Full Cloudinary URL (`cloudinary://key:secret@cloud_name`)     |
+| `DEFAULT_RECIPE_IMAGE_URL`| Cloudinary URL for the default recipe placeholder image        |
+
+### Database setup
+
+```bash
+bin/rails db:create db:migrate
+```
+
+### Start the app
+
+You need two processes — the web server and the background job worker:
+
+```bash
+# Terminal 1 — web server
+bin/rails server
+
+# Terminal 2 — job worker (for AI streaming)
+bin/jobs
+```
+
+Open [http://localhost:3000](http://localhost:3000).
+
+---
+
+## Running Tests
+
+```bash
+bin/rails test
+```
+
+The test suite covers authorization, model validations, and controller access control.
+
+---
+
+## Project Structure
+
+```text
+app/
+├── controllers/
+│   ├── messages_controller.rb        # AI chat + recipe saving
+│   ├── recipes_controller.rb         # Recipe CRUD with visibility
+│   └── pages_controller.rb           # Feed, home, profile
+├── models/
+│   ├── recipe.rb                     # GI classification, markdown parsing, visibility enum
+│   ├── post.rb                       # Social feed posts
+│   └── vote.rb                       # Polymorphic voting
+├── jobs/
+│   └── generate_llm_response_job.rb  # Async AI streaming
+└── javascript/controllers/
+    ├── wizard_controller.js          # Multi-step recipe creation form
+    └── vote_controller.js            # Real-time vote updates
+```
+
+---
+
+## License
+
+MIT
