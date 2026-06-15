@@ -23,6 +23,5 @@ Rails.application.routes.draw do
       end
     end
   end
-  resources :recipe_items, only: [:new, :create]
   resources :chat_items, only: [:new, :create]
 end
