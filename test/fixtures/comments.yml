@@ -1,0 +1,9 @@
+bob_comment:
+  content: Super recette !
+  user: bob
+  post: alice_post
+
+alice_comment:
+  content: Merci !
+  user: alice
+  post: alice_post

@@ -19,7 +19,10 @@ class PagesController < ApplicationController
   end
 
   def feed
-    @posts = Post.order(created_at: :desc)
+    @posts = Post
+      .with_attached_photo
+      .includes(user: { photo_attachment: :blob }, votes: [], comments: [:user, :votes])
+      .order(created_at: :desc)
     @post = Post.new
   end
 end

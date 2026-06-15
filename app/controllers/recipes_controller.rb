@@ -4,17 +4,19 @@ class RecipesController < ApplicationController
   before_action :require_owner!, only: [:edit, :update, :destroy]
 
   def index
+    all_recipes = current_user.recipes.order(created_at: :desc).to_a
+
     if params[:query].present?
       @recipes = current_user.recipes.search_by_name_description_difficulty_indice_gly(params[:query])
     else
-      @recipes = current_user.recipes
+      @recipes = all_recipes
     end
+
+    @low_gi_recipes    = all_recipes.select { |r| r.indice_gly && r.indice_gly < 55 }
+    @medium_gi_recipes = all_recipes.select { |r| r.indice_gly && r.indice_gly.between?(55, 70) }
+    @high_gi_recipes   = all_recipes.select { |r| r.indice_gly && r.indice_gly > 70 }
+
     @recipe = Recipe.new
-    # Group recipes by GI level
-    @low_gi_recipes = current_user.recipes.where('indice_gly < ?', 55).order(created_at: :desc)
-    @medium_gi_recipes = current_user.recipes.where('indice_gly >= ? AND indice_gly <= ?', 55, 70).order(created_at: :desc)
-    @high_gi_recipes = current_user.recipes.where('indice_gly > ?', 70).order(created_at: :desc)
-    # For the SuperCarbo chat option
     @chat_item = ChatItem.new
     @items = current_user.items
   end

@@ -13,7 +13,7 @@ class Post < ApplicationRecord
 
   # Calcule le score total du post (upvotes - downvotes)
   def score
-    votes.sum(:value)
+    votes.sum(&:value)
   end
 
   # Trouve le vote d'un utilisateur spécifique sur ce post

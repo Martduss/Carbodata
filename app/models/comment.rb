@@ -12,7 +12,7 @@ class Comment < ApplicationRecord
   }
 
   def score
-    votes.sum(:value)
+    votes.sum(&:value)
   end
 
   def vote_by(user)

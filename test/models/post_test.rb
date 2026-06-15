@@ -30,6 +30,16 @@ class PostTest < ActiveSupport::TestCase
     assert post.valid?
   end
 
+  # --- score ---
+
+  test "score sums vote values using preloaded collection" do
+    post = posts(:alice_post)
+    post_with_votes = Post.includes(:votes).find(post.id)
+
+    assert post_with_votes.votes.loaded?
+    assert_equal 0, post_with_votes.score  # alice +1, bob -1 = 0
+  end
+
   # --- content ---
 
   test "invalid without content" do

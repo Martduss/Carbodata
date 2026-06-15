@@ -106,10 +106,10 @@
                 <!-- Comments Section -->
                 <div class="feed-card-comments">
                   <% if post.comments.any? %>
-                    <% if post.comments.count > 2 %>
-                      <%= link_to "View all #{post.comments.count} comments", post_path(post), class: "view-all-comments" %>
+                    <% if post.comments.size > 2 %>
+                      <%= link_to "View all #{post.comments.size} comments", post_path(post), class: "view-all-comments" %>
                     <% end %>
-                    <%= render 'shared/comments', comments: post.comments.by_score.limit(2), post: post %>
+                    <%= render 'shared/comments', comments: post.comments.sort_by { |c| [-c.score, -c.created_at.to_i] }.first(2), post: post %>
                   <% end %>
 
                   <%= render 'shared/comment_form', post: post %>

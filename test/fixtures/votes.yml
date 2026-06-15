@@ -1,0 +1,11 @@
+alice_upvote_on_post:
+  user: alice
+  value: 1
+  votable_type: Post
+  votable: alice_post (Post)
+
+bob_downvote_on_post:
+  user: bob
+  value: -1
+  votable_type: Post
+  votable: alice_post (Post)
