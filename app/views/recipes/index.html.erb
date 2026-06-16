@@ -20,23 +20,31 @@
 
   <%
     carousels = [
-      { id: 'carousel1', title: 'Low GI Recipes', recipes: @low_gi_recipes, level: 'low' },
-      { id: 'carousel2', title: 'Medium GI Recipes', recipes: @medium_gi_recipes, level: 'medium' },
-      { id: 'carousel3', title: 'High GI Recipes', recipes: @high_gi_recipes, level: 'high' }
+      { id: 'carouselLatest', title: 'Latest Meals', recipes: @latest_recipes, level: 'latest', icon: nil },
+      { id: 'carousel1', title: 'Low GI Recipes', recipes: @low_gi_recipes, level: 'low', icon: 'bi-droplet-fill' },
+      { id: 'carousel2', title: 'Medium GI Recipes', recipes: @medium_gi_recipes, level: 'medium', icon: 'bi-droplet-fill' },
+      { id: 'carousel3', title: 'High GI Recipes', recipes: @high_gi_recipes, level: 'high', icon: 'bi-droplet-fill' }
     ]
   %>
 
   <% carousels.each do |carousel| %>
     <div class="carousel-section mt-4">
       <h2 class="h-default mb-3">
-        <span class="recipe-count recipe-count-<%= carousel[:level] %>">
-          <i class="bi bi-droplet-fill"></i>
-          <span class="count-number"><%= carousel[:recipes].count %></span>
-        </span>
+        <% if carousel[:icon] %>
+          <span class="recipe-count recipe-count-<%= carousel[:level] %>">
+            <i class="bi <%= carousel[:icon] %>"></i>
+            <span class="count-number"><%= carousel[:recipes].count %></span>
+          </span>
+        <% else %>
+          <i class="fas fa-fire me-1 latest-fire-icon"></i>
+        <% end %>
         <%= carousel[:title] %>
       </h2>
-      <div class="horizontal-scroll-wrapper">
-        <div class="horizontal-scroll-container">
+      <div class="horizontal-scroll-wrapper" data-controller="carousel">
+        <button class="carousel-arrow carousel-arrow-left" data-action="carousel#prev" type="button" aria-label="Previous">
+          <i class="bi bi-chevron-left"></i>
+        </button>
+        <div class="horizontal-scroll-container" data-carousel-target="track">
           <% carousel[:recipes].each do |recipe| %>
             <%= link_to "#", class: "recipe-card-link", data: { bs_toggle: "offcanvas", bs_target: "#offcanvasRecipe#{recipe.id}" } do %>
               <div class="recipe-card">
@@ -85,11 +93,14 @@
             <% end %>
           <% end %>
         </div>
+        <button class="carousel-arrow carousel-arrow-right" data-action="carousel#next" type="button" aria-label="Next">
+          <i class="bi bi-chevron-right"></i>
+        </button>
       </div>
     </div>
   <% end %>
 
-  <% [@low_gi_recipes, @medium_gi_recipes, @high_gi_recipes].flatten.each do |recipe| %>
+  <% [@latest_recipes, @low_gi_recipes, @medium_gi_recipes, @high_gi_recipes].flatten.uniq(&:id).each do |recipe| %>
     <div class="offcanvas offcanvas-bottom" tabindex="-1" id="offcanvasRecipe<%= recipe.id %>" aria-labelledby="offcanvasRecipeLabel<%= recipe.id %>" data-bs-backdrop="true">
       <div class="offcanvas-dialog offcanvas-dialog-centered">
         <div class="offcanvas-content">

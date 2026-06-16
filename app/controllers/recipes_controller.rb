@@ -12,6 +12,7 @@ class RecipesController < ApplicationController
       @recipes = all_recipes
     end
 
+    @latest_recipes    = all_recipes.first(6)
     @low_gi_recipes    = all_recipes.select { |r| r.indice_gly && r.indice_gly < 55 }
     @medium_gi_recipes = all_recipes.select { |r| r.indice_gly && r.indice_gly.between?(55, 70) }
     @high_gi_recipes   = all_recipes.select { |r| r.indice_gly && r.indice_gly > 70 }
