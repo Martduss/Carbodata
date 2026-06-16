@@ -1,5 +1,4 @@
 <% content_for :navbar_text_label, "For you" %>
-<% content_for :navbar_text_path, feed_path %>
 
 <div class="feed-page">
   <div class="container-fluid px-0 px-lg-3">
@@ -17,7 +16,7 @@
                 <!-- Post Header -->
                 <div class="feed-card-header">
                   <div class="d-flex align-items-center">
-                    <%= link_to profile_path, class: "text-decoration-none" do %>
+                    <%= link_to user_path(post.user), class: "text-decoration-none" do %>
                       <div class="feed-author-avatar">
                         <% if post.user.photo.attached? %>
                           <%= image_tag post.user.photo, alt: post.user.profile_name, class: "avatar-img" %>
@@ -29,7 +28,7 @@
                       </div>
                     <% end %>
                     <div class="flex-grow-1 ms-3">
-                      <%= link_to profile_path, class: "feed-author-name" do %>
+                      <%= link_to user_path(post.user), class: "feed-author-name" do %>
                         <%= post.user.profile_name || post.user.email.split('@').first %>
                       <% end %>
                       <div class="feed-post-time">
@@ -183,7 +182,7 @@
                       <% end %>
                     </div>
                     <div class="flex-grow-1 ms-2">
-                      <%= link_to profile_path, class: "suggestion-name" do %>
+                      <%= link_to user_path(user), class: "suggestion-name" do %>
                         <%= user.profile_name || user.email.split('@').first %>
                       <% end %>
                       <div class="suggestion-info">

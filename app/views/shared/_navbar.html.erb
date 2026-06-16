@@ -3,9 +3,13 @@
     <div class="container">
 
       <div class="navbar-brand-container">
-        <% if content_for?(:navbar_text_label)%>
-          <%= link_to content_for(:navbar_text_path), class: "navbar-brand" do %>
-            <%=content_for(:navbar_text_label) %>
+        <% if content_for?(:navbar_text_label) %>
+          <% if content_for?(:navbar_text_path) %>
+            <%= link_to content_for(:navbar_text_path), class: "navbar-brand" do %>
+              <%= content_for(:navbar_text_label) %>
+            <% end %>
+          <% else %>
+            <span class="navbar-brand"><%= content_for(:navbar_text_label) %></span>
           <% end %>
         <% end %>
         <span class="navbar-separator">|</span>

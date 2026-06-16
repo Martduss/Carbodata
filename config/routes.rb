@@ -14,6 +14,7 @@ Rails.application.routes.draw do
     resource :vote, only: [:create]
   end
 
+  resources :users, only: [:show]
   resources :recipes
   resources :items, except:[:new]
   resources :chats, only: [:index, :show, :destroy] do
