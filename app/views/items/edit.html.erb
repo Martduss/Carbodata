@@ -1,14 +1,14 @@
 <% content_for :navbar_text_label, "Carboducts" %>
 <% content_for :navbar_text_path, items_path %>
 
-<div class="container-fluid">
+<div class="container">
   <div class="text-center">
-    <h1 class="header-margin display-5 fw-bold text-primary">Edit CarboDuct</h1>
+    <h1 class="header-home display-5 fw-bold h-default">Edit CarboDuct</h1>
 
     <%= render "form" %>
 
-    <div class="mt-2 d-flex justify-content-center gap-3 flex-wrap">
-      <%= link_to "View my CarboDucts", items_path, class: "btn btn-primary w-100" %>
+    <div class="d-grid gap-3">
+      <%= link_to "BACK", items_path, class: "btn button-default w-100 rounded-5" %>
     </div>
   </div>
 </div>
