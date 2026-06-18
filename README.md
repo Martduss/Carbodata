@@ -8,7 +8,6 @@ A full-stack web application that helps people with diabetes discover, create, a
 
 ## Screenshots
 
-<!-- Replace the images below with actual screenshots -->
 
 | Feed                                   | Recipe Manager                             | SuperCarbo AI                          |
 | -------------------------------------- | ------------------------------------------ | -------------------------------------- |
@@ -113,7 +112,7 @@ Open [http://localhost:3000](http://localhost:3000).
 bin/rails test
 ```
 
-The test suite covers authorization, model validations, and controller access control.
+Authorization and recipe visibility are covered; other controllers are stubs
 
 ---
 
