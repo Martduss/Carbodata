@@ -8,16 +8,21 @@ A full-stack web application that helps people with diabetes discover, create, a
 
 ## Screenshots
 
+| Feed                               | Recipes (Carbomeals)                           | Products (CarboDucts)                                     |
+|------------------------------------|------------------------------------------|------------------------------------------------|
+| ![Feed](docs/screenshots/feed.png) | ![Recipes](docs/screenshots/recipes.png) | ![CarboDucts](docs/screenshots/carboducts.png) |
 
-| Feed                                   | Recipe Manager                             | SuperCarbo AI                          |
-| -------------------------------------- | ------------------------------------------ | -------------------------------------- |
-| ![Feed](docs/screenshots/feed.png)     | ![Recipes](docs/screenshots/recipes.png)   | ![Chat](docs/screenshots/chat.png)     |
+### SuperCarbo AI in action => Construct your own original recipe with SuperCarbo!
+
+| 1. Pick your ingredients                                      | 2. Get a recipe instantly                                   | 3. Ask what you want to SuperCarbo
+|---------------------------------------------------------------|-------------------------------------------------------------|----------------------------------------------------|
+| ![Select ingredients](docs/screenshots/chat_select_items.png) | ![First response](docs/screenshots/chat_first_response.png) | ![Detailed steps](docs/screenshots/chat_steps.png) |
 
 ---
 
 ## Features
 
-- **Recipe manager** — Create and organize recipes by glycemic index (GI) with automatic low/medium/high classification
+- **CarboMeals** — Create and organize recipes by glycemic index (GI) with automatic low/medium/high classification
 - **AI chatbot "SuperCarbo"** — Chat with an OpenAI-powered assistant that generates diabetic-friendly recipes based on ingredients you select; responses stream in real time
 - **Social feed** — Share posts with the community, comment, and vote (upvote/downvote)
 - **CarboDucts** — Manage individual food items with GI and carb data to use as inputs for AI recipe generation
