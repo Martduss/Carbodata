@@ -59,4 +59,23 @@ class RecipesControllerTest < ActionDispatch::IntegrationTest
     get recipes_path
     assert_redirected_to new_user_session_path
   end
+
+  # --- NIL NUTRITIONAL DATA (regression for production crash) ---
+
+  test "index renders successfully when a recipe has no GI or carb ratio" do
+    sign_in users(:alice)
+    recipes(:alice_recipe_without_nutritional_info)
+
+    get recipes_path
+
+    assert_response :success
+  end
+
+  test "show renders successfully when the recipe has no GI or carb ratio" do
+    sign_in users(:alice)
+
+    get recipe_path(recipes(:alice_recipe_without_nutritional_info))
+
+    assert_response :success
+  end
 end

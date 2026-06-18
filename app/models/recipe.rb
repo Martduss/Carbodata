@@ -52,7 +52,7 @@ class Recipe < ApplicationRecord
   end
 
   def carb_stars
-    return nil if indice_gly.nil?
+    return nil if ratio_glucide.nil?
     return 5 if ratio_glucide < 20
     return 4 if ratio_glucide < 35
     return 3 if ratio_glucide < 50

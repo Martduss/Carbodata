@@ -15,3 +15,12 @@ alice_shared_recipe:
   difficulty: 1
   visibility: 1
   user: alice
+
+alice_recipe_without_nutritional_info:
+  name: Alice Mystery Dish
+  description: A recipe saved before filling in GI/carbs
+  indice_gly:
+  ratio_glucide:
+  difficulty:
+  visibility: 0
+  user: alice

@@ -84,4 +84,52 @@ class RecipeTest < ActiveSupport::TestCase
     recipe.difficulty = 6
     assert_not recipe.valid?
   end
+
+  # --- nil guards on computed methods ---
+
+  test "gi_level returns nil when indice_gly is nil" do
+    recipe = valid_recipe
+    recipe.indice_gly = nil
+    assert_nil recipe.gi_level
+  end
+
+  test "gi_stars returns nil when indice_gly is nil" do
+    recipe = valid_recipe
+    recipe.indice_gly = nil
+    assert_nil recipe.gi_stars
+  end
+
+  test "carb_stars returns nil when ratio_glucide is nil" do
+    recipe = valid_recipe
+    recipe.ratio_glucide = nil
+    assert_nil recipe.carb_stars
+  end
+
+  test "carb_stars does not crash when ratio_glucide is nil but indice_gly is present" do
+    # Regression test: carb_stars used to check indice_gly.nil? (copy-pasted
+    # from Item#carb_stars) instead of ratio_glucide.nil?, then operated on
+    # ratio_glucide. A recipe with a GI but no carb ratio would raise
+    # NoMethodError on `nil < 20` instead of returning nil.
+    recipe = valid_recipe
+    recipe.indice_gly = 40
+    recipe.ratio_glucide = nil
+    assert_nil recipe.carb_stars
+  end
+
+  test "carb_stars computes a value when ratio_glucide is present, regardless of indice_gly" do
+    recipe = valid_recipe
+    recipe.indice_gly = nil
+    recipe.ratio_glucide = 15
+    assert_equal 5, recipe.carb_stars
+  end
+
+  test "gi_level classifies correctly" do
+    recipe = valid_recipe
+    recipe.indice_gly = 40
+    assert_equal "low", recipe.gi_level
+    recipe.indice_gly = 60
+    assert_equal "medium", recipe.gi_level
+    recipe.indice_gly = 80
+    assert_equal "high", recipe.gi_level
+  end
 end

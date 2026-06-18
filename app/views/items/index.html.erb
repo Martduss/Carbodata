@@ -74,24 +74,26 @@
                       <div class="rating-item">
                         <span class="rating-label">Glycemic Index:</span>
                         <div class="rating-icons rating-gi-<%= item.gi_level %>">
-                          <% reversed_gi = [5 - item.gi_stars, 1].max %>
-                          <% reversed_gi.times do %>
-                            <i class="bi bi-droplet-fill"></i>
-                          <% end %>
-                          <% (5 - reversed_gi).times do %>
-                            <i class="bi bi-droplet"></i>
+                          <% if (reversed_gi = reversed_stars(item.gi_stars)) %>
+                            <% reversed_gi.times do %>
+                              <i class="bi bi-droplet-fill"></i>
+                            <% end %>
+                            <% (5 - reversed_gi).times do %>
+                              <i class="bi bi-droplet"></i>
+                            <% end %>
                           <% end %>
                         </div>
                       </div>
                       <div class="rating-item">
                         <span class="rating-label">Carbs:</span>
                         <div class="rating-icons rating-carb-<%= item.gi_level %>">
-                          <% reversed_carb = [5 - item.carb_stars, 1].max %>
-                          <% reversed_carb.times do %>
-                            <i class="bi bi-lightning-charge-fill"></i>
-                          <% end %>
-                          <% (5 - reversed_carb).times do %>
-                            <i class="bi bi-lightning-charge"></i>
+                          <% if (reversed_carb = reversed_stars(item.carb_stars)) %>
+                            <% reversed_carb.times do %>
+                              <i class="bi bi-lightning-charge-fill"></i>
+                            <% end %>
+                            <% (5 - reversed_carb).times do %>
+                              <i class="bi bi-lightning-charge"></i>
+                            <% end %>
                           <% end %>
                         </div>
                       </div>

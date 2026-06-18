@@ -1,15 +1,16 @@
 require "test_helper"
 
-class ItemsControllerTest < ActionDispatch::IntegrationTest
+class PagesControllerTest < ActionDispatch::IntegrationTest
   include Devise::Test::IntegrationHelpers
 
   # --- NIL NUTRITIONAL DATA (regression for production crash) ---
 
-  test "index renders successfully when an item has no GI or carb ratio" do
+  test "profile renders successfully when recipes and items have no GI or carb ratio" do
     sign_in users(:alice)
+    recipes(:alice_recipe_without_nutritional_info)
     items(:alice_item_without_nutritional_info)
 
-    get items_path
+    get profile_path
 
     assert_response :success
   end

@@ -1,0 +1,15 @@
+alice_item_with_nutritional_info:
+  name: Quinoa
+  brand: Generic
+  category: Grain
+  indice_gly: 53
+  ratio_glucide: 64
+  user: alice
+
+alice_item_without_nutritional_info:
+  name: Mystery Snack
+  brand: Generic
+  category: Snack
+  indice_gly:
+  ratio_glucide:
+  user: alice
