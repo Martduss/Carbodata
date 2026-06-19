@@ -13,6 +13,16 @@ class CommentsController < ApplicationController
     end
   end
 
+  def update
+    @comment = current_user.comments.find(params[:id])
+
+    if @comment.update(comment_params)
+      redirect_back fallback_location: post_path(@comment.post)
+    else
+      redirect_back fallback_location: post_path(@comment.post), alert: "Comment cannot be empty."
+    end
+  end
+
   def destroy
     @comment = current_user.comments.find(params[:id])
     @comment.destroy

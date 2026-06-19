@@ -8,7 +8,7 @@ class Users::RegistrationsControllerTest < ActionDispatch::IntegrationTest
 
     patch user_registration_path, params: { user: { profile_name: "Alicia" } }
 
-    assert_redirected_to root_path
+    assert_redirected_to profile_path
     assert_equal "Alicia", users(:alice).reload.profile_name
   end
 
@@ -35,7 +35,7 @@ class Users::RegistrationsControllerTest < ActionDispatch::IntegrationTest
 
     patch user_registration_path, params: { user: { password: "newpassword", password_confirmation: "newpassword", current_password: "password" } }
 
-    assert_redirected_to root_path
+    assert_redirected_to profile_path
     assert users(:alice).reload.valid_password?("newpassword")
   end
 
@@ -53,7 +53,7 @@ class Users::RegistrationsControllerTest < ActionDispatch::IntegrationTest
 
     patch user_registration_path, params: { user: { email: "alicia@example.com", current_password: "password" } }
 
-    assert_redirected_to root_path
+    assert_redirected_to profile_path
     # Email changes are reconfirmable: the new address is staged in
     # unconfirmed_email until the confirmation link is clicked.
     assert_equal "alicia@example.com", users(:alice).reload.unconfirmed_email
