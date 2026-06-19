@@ -297,6 +297,31 @@
   }
 }
 
+// Comment owner icons (edit/delete, shown to comment author only)
+.comment-owner-icons {
+  flex-shrink: 0;
+  margin-left: 0.75rem;
+  display: inline-flex;
+  gap: 8px;
+}
+
+.comment-icon-link {
+  background: none;
+  border: none;
+  padding: 0;
+  color: #888;
+  font-size: $font-size-xs;
+  transition: color 0.2s;
+
+  &:hover {
+    color: #d34e4e;
+  }
+}
+
+.comment-icon-delete:hover {
+  color: #dc3545;
+}
+
 // Comment Form
 .comment-form {
   border-top: 1px solid $text-light-grey;
