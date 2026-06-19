@@ -5,6 +5,10 @@ class VotesController < ApplicationController
     @votable = find_votable
     value = params[:value].to_i
 
+    unless [1, -1].include?(value)
+      return render json: { error: "Invalid vote value" }, status: :unprocessable_entity
+    end
+
     existing_vote = @votable.vote_by(current_user)
 
     if existing_vote
