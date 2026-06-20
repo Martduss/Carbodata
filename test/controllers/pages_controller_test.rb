@@ -14,4 +14,10 @@ class PagesControllerTest < ActionDispatch::IntegrationTest
 
     assert_response :success
   end
+
+  test "privacy policy page renders successfully without authentication" do
+    get privacy_policy_path
+
+    assert_response :success
+  end
 end

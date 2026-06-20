@@ -6,6 +6,7 @@ Rails.application.routes.draw do
   get "home", to: "pages#home"
   get "feed", to: "pages#feed"
   get "profile", to: "pages#profile"
+  get "privacy-policy", to: "pages#privacy_policy"
 
   resources :posts do
     resources :comments, except: [:show, :index, :edit] do

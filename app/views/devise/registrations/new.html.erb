@@ -24,6 +24,16 @@
                     placeholder: "Confirm password",
                     input_html: { class: "placeholder-custom", autocomplete: "new-password" } %>
         <%= f.input :photo, as: :file, hint: "Add a picture" %>
+        <%= f.input :accept_terms,
+                    as: :boolean,
+                    required: true,
+                    label: false,
+                    wrapper_html: { class: "text-start mb-3" } do %>
+          <%= f.check_box :accept_terms %>
+          <%= f.label :accept_terms, class: "form-check-label ms-1" do %>
+            I have read and accept the <%= link_to "Privacy Policy", privacy_policy_path, target: "_blank", rel: "noopener" %>
+          <% end %>
+        <% end %>
         <%= f.submit "Sign up", class: "btn button-default w-100 rounded-5 mb-2" %>
       <% end %>
       <div class="d-grid gap-3">

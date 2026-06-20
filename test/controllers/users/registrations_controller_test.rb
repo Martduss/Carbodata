@@ -61,12 +61,26 @@ class Users::RegistrationsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "new sign-ups can sign in immediately without confirming their email" do
-    post user_registration_path, params: { user: { email: "carol@example.com", password: "password", password_confirmation: "password", profile_name: "Carol" } }
+    post user_registration_path, params: { user: { email: "carol@example.com", password: "password", password_confirmation: "password", profile_name: "Carol", accept_terms: "1" } }
 
     user = User.find_by(email: "carol@example.com")
     assert user.confirmed?
 
     post user_session_path, params: { user: { email: "carol@example.com", password: "password" } }
     assert_redirected_to home_path
+  end
+
+  test "sign-up records when the user accepted the privacy policy" do
+    post user_registration_path, params: { user: { email: "dave@example.com", password: "password", password_confirmation: "password", profile_name: "Dave", accept_terms: "1" } }
+
+    user = User.find_by(email: "dave@example.com")
+    assert_not_nil user.accepted_terms_at
+  end
+
+  test "sign-up is rejected when the privacy policy checkbox is left unchecked" do
+    post user_registration_path, params: { user: { email: "erin@example.com", password: "password", password_confirmation: "password", profile_name: "Erin", accept_terms: "0" } }
+
+    assert_nil User.find_by(email: "erin@example.com")
+    assert_response :unprocessable_entity
   end
 end
