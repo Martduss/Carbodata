@@ -8,7 +8,7 @@ class PagesController < ApplicationController
   end
   
   def profile
-    @last_recipes = current_user.recipes.order(created_at: :desc)
+    @last_recipes = current_user.recipes.with_attached_photo.order(created_at: :desc)
     @last_items = current_user.items.order(created_at: :desc)
 
     if params[:query].present?

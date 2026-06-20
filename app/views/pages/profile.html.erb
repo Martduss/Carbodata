@@ -19,7 +19,7 @@
         <div class="col-12 col-md-3 text-center">
           <div class="hub-avatar-wrapper">
             <% if current_user.respond_to?(:photo) && current_user.photo.attached? %>
-              <%= image_tag current_user.photo.variant(resize_to_limit: [280, 280]), alt: current_user.profile_name, class: "hub-avatar" %>
+              <%= image_tag optimized_image_url(current_user.photo, width: 280, height: 280), alt: current_user.profile_name, class: "hub-avatar" %>
             <% elsif current_user.respond_to?(:avatar) && current_user.avatar.present? %>
               <%= image_tag current_user.avatar, alt: current_user.profile_name, class: "hub-avatar" %>
             <% else %>
@@ -106,10 +106,15 @@
       <% if current_user.recipes.any? %>
         <div class="horizontal-scroll-wrapper">
           <div class="horizontal-scroll-container">
-            <% @last_recipes.limit(3).each do |recipe| %>
+            <% @last_recipes.limit(3).each.with_index do |recipe, recipe_index| %>
               <%= link_to recipe_path(recipe), class: "recipe-card-link" do %>
                 <div class="recipe-card">
-                  <div class="recipe-card-image" style="background-image: url('<%= recipe.photo.attached? ? url_for(recipe.photo) : Recipe::DEFAULT_IMAGE_URL %>');">
+                  <div class="recipe-card-image">
+                    <%= image_tag optimized_image_url(recipe.photo, width: 400, height: 500) || Recipe::DEFAULT_IMAGE_URL,
+                          alt: recipe.name,
+                          class: "recipe-card-photo",
+                          loading: (recipe_index.zero? ? nil : "lazy"),
+                          fetchpriority: (recipe_index.zero? ? "high" : nil) %>
                     <div class="recipe-card-badges">
                       <div class="gi-badge gi-<%= recipe.gi_level %>">
                         <i class="bi bi-droplet-fill"></i>
@@ -280,7 +285,7 @@
                     <div class="d-flex align-items-center">
                       <div class="feed-author-avatar">
                         <% if current_user.photo.attached? %>
-                          <%= image_tag current_user.photo.variant(resize_to_limit: [150, 150]), alt: current_user.profile_name, class: "avatar-img" %>
+                          <%= image_tag optimized_image_url(current_user.photo, width: 150, height: 150), alt: current_user.profile_name, class: "avatar-img" %>
                         <% else %>
                           <div class="avatar-placeholder">
                             <%= (current_user.profile_name || current_user.email.split('@').first).first.upcase %>
@@ -310,7 +315,7 @@
                   <!-- Post Image (if available) -->
                   <% if post.respond_to?(:photo) && post.photo.attached? %>
                     <div class="feed-card-image">
-                      <%= image_tag post.photo.variant(resize_to_limit: [800, 800]), alt: post.title, class: "post-image" %>
+                      <%= image_tag optimized_image_url(post.photo, width: 800, height: 800), alt: post.title, class: "post-image" %>
                     </div>
                   <% end %>
 

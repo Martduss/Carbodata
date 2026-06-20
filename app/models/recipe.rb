@@ -18,7 +18,9 @@ class Recipe < ApplicationRecord
   validates :ratio_glucide, numericality: { only_integer: true, greater_than_or_equal_to: 1, less_than_or_equal_to: 100 }, allow_nil: true
   validates :difficulty, numericality: { only_integer: true, greater_than_or_equal_to: 1, less_than_or_equal_to: 5 }, allow_nil: true
 
-  DEFAULT_IMAGE_URL = "https://res.cloudinary.com/dvoeovqth/image/upload/recette_default_rwy5jj.jpg".freeze
+  # Transformed so the placeholder doesn't ship at its native size (3331x5353px, ~2.8MB) —
+  # untransformed it was the page's LCP element whenever a recipe has no photo.
+  DEFAULT_IMAGE_URL = "https://res.cloudinary.com/dvoeovqth/image/upload/c_fill,f_auto,h_800,q_auto,w_800/recette_default_rwy5jj.jpg".freeze
   pg_search_scope :search_by_name_description_difficulty_indice_gly, {
     against: {name: 'A', description: 'B', difficulty: 'B', indice_gly: 'B'},
     using: {

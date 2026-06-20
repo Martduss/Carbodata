@@ -7,6 +7,9 @@
 // 2️⃣ Librairies externes
 // ==========================
 @import "bootstrap";
+
+// font-awesome defaults to font-display: block (text invisible until the font loads) — swap avoids that FOIT
+$fa-font-display: swap;
 @import "font-awesome";
 
 // 3️⃣ Composants réutilisables

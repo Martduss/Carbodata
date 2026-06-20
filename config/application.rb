@@ -34,5 +34,8 @@ module CarboData2114
 
     # libvips isn't installed on this machine; ImageMagick (mini_magick) is.
     config.active_storage.variant_processor = :mini_magick
+
+    # Gzip responses (CSS/JS/HTML) — the compiled stylesheet is ~1.2MB uncompressed.
+    config.middleware.use Rack::Deflater
   end
 end

@@ -19,7 +19,7 @@
                     <%= link_to user_path(post.user), class: "text-decoration-none" do %>
                       <div class="feed-author-avatar">
                         <% if post.user.photo.attached? %>
-                          <%= image_tag post.user.photo.variant(resize_to_limit: [150, 150]), alt: post.user.profile_name, class: "avatar-img" %>
+                          <%= image_tag optimized_image_url(post.user.photo, width: 150, height: 150), alt: post.user.profile_name, class: "avatar-img" %>
                         <% else %>
                           <div class="avatar-placeholder">
                             <%= (post.user.profile_name || post.user.email.split('@').first).first.upcase %>
@@ -52,7 +52,7 @@
                 <!-- Post Image (if available) -->
                 <% if post.respond_to?(:photo) && post.photo.attached? %>
                   <div class="feed-card-image">
-                    <%= image_tag post.photo.variant(resize_to_limit: [800, 800]), alt: post.title, class: "post-image" %>
+                    <%= image_tag optimized_image_url(post.photo, width: 800, height: 800), alt: post.title, class: "post-image" %>
                   </div>
                 <% end %>
 
@@ -145,7 +145,7 @@
               <div class="d-flex align-items-center">
                 <div class="sidebar-avatar">
                   <% if current_user.photo.attached? %>
-                    <%= image_tag current_user.photo.variant(resize_to_limit: [150, 150]), alt: current_user.profile_name, class: "avatar-img" %>
+                    <%= image_tag optimized_image_url(current_user.photo, width: 150, height: 150), alt: current_user.profile_name, class: "avatar-img" %>
                   <% else %>
                     <div class="avatar-placeholder">
                       <%= (current_user.profile_name || current_user.email.split('@').first).first.upcase %>
@@ -174,7 +174,7 @@
                   <div class="d-flex align-items-center">
                     <div class="suggestion-avatar">
                       <% if user.photo.attached? %>
-                        <%= image_tag user.photo.variant(resize_to_limit: [150, 150]), alt: user.profile_name, class: "avatar-img" %>
+                        <%= image_tag optimized_image_url(user.photo, width: 150, height: 150), alt: user.profile_name, class: "avatar-img" %>
                       <% else %>
                         <div class="avatar-placeholder small">
                           <%= (user.profile_name || user.email.split('@').first).first.upcase %>

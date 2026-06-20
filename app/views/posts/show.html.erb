@@ -14,7 +14,7 @@
             <div class="d-flex align-items-center">
               <div class="feed-author-avatar">
                 <% if @post.user.photo.attached? %>
-                  <%= image_tag @post.user.photo.variant(resize_to_limit: [150, 150]), alt: @post.user.profile_name, class: "avatar-img" %>
+                  <%= image_tag optimized_image_url(@post.user.photo, width: 150, height: 150), alt: @post.user.profile_name, class: "avatar-img" %>
                 <% else %>
                   <div class="avatar-placeholder">
                     <%= (@post.user.profile_name || @post.user.email.split('@').first).first.upcase %>
@@ -46,7 +46,7 @@
           <!-- Post Image -->
           <% if @post.photo.attached? %>
             <div class="feed-card-image">
-              <%= image_tag @post.photo.variant(resize_to_limit: [800, 800]), alt: @post.title, class: "post-image" %>
+              <%= image_tag optimized_image_url(@post.photo, width: 800, height: 800), alt: @post.title, class: "post-image" %>
             </div>
           <% end %>
 
@@ -114,7 +114,7 @@
                     <div class="d-flex align-items-center mb-1">
                       <div class="comment-author-avatar">
                         <% if comment.user.photo.attached? %>
-                          <%= image_tag comment.user.photo.variant(resize_to_limit: [150, 150]), alt: comment.user.profile_name, class: "avatar-img" %>
+                          <%= image_tag optimized_image_url(comment.user.photo, width: 150, height: 150), alt: comment.user.profile_name, class: "avatar-img" %>
                         <% else %>
                           <div class="avatar-placeholder">
                             <%= (comment.user.profile_name || comment.user.email.split('@').first).first.upcase %>

@@ -45,10 +45,16 @@
           <i class="bi bi-chevron-left"></i>
         </button>
         <div class="horizontal-scroll-container" data-carousel-target="track">
-          <% carousel[:recipes].each do |recipe| %>
+          <% carousel[:recipes].each.with_index do |recipe, recipe_index| %>
+            <% is_lcp_candidate = carousel[:id] == carousels.first[:id] && recipe_index.zero? %>
             <%= link_to "#", class: "recipe-card-link", data: { bs_toggle: "offcanvas", bs_target: "#offcanvasRecipe#{recipe.id}" } do %>
               <div class="recipe-card">
-                <div class="recipe-card-image" style="background-image: url('<%= recipe.photo.attached? ? url_for(recipe.photo.variant(resize_to_limit: [400, 500])) : Recipe::DEFAULT_IMAGE_URL %>');">
+                <div class="recipe-card-image">
+                  <%= image_tag optimized_image_url(recipe.photo, width: 400, height: 500) || Recipe::DEFAULT_IMAGE_URL,
+                        alt: recipe.name,
+                        class: "recipe-card-photo",
+                        loading: (is_lcp_candidate ? nil : "lazy"),
+                        fetchpriority: (is_lcp_candidate ? "high" : nil) %>
                   <div class="recipe-card-badges">
                     <div class="gi-badge gi-<%= recipe.gi_level %>">
                       <i class="bi bi-droplet-fill"></i>
@@ -113,7 +119,11 @@
           <div class="offcanvas-body">
             <div class="card shadow-sm rounded-5 p-4 border-0">
               <!-- Recipe Image -->
-              <div class="recipe-show-image rounded-4 mb-4" style="background-image: url('<%= recipe.photo.attached? ? url_for(recipe.photo.variant(resize_to_limit: [800, 800])) : Recipe::DEFAULT_IMAGE_URL %>');">
+              <div class="recipe-show-image rounded-4 mb-4">
+                <%= image_tag optimized_image_url(recipe.photo, width: 800, height: 800) || Recipe::DEFAULT_IMAGE_URL,
+                      alt: recipe.name,
+                      class: "recipe-show-photo",
+                      loading: "lazy" %>
                 <div class="recipe-card-badges">
                   <div class="gi-badge gi-<%= recipe.gi_level %>">
                     <i class="bi bi-droplet-fill"></i>
