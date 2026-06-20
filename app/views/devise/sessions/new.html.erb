@@ -1,29 +1,26 @@
-<% content_for :first_button_label, "Sign up" %>
-<% content_for :first_button_path, new_user_registration_path %>
+<div class="account-form-page">
+  <div class="container">
+    <div class="account-form-card text-center">
+      <h1 class="account-form-title">Log in</h1>
+      <%= simple_form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
+        <%= f.input :email,
+                    required: false,
+                    autofocus: true,
+                    placeholder: "Your email",
+                    input_html: { class: "placeholder-custom", autocomplete: "email" } %>
 
-<% content_for :second_button_label, "Forgot your password?" %>
-<% content_for :second_button_path, new_user_password_path %>
+        <%= f.input :password,
+                    required: false,
+                    placeholder: "Your password",
+                    input_html: { class: "placeholder-custom", autocomplete: "current-password" } %>
 
+        <%= f.input :remember_me, as: :boolean if devise_mapping.rememberable? %>
 
-<h2 class="text-center mt-4 mb-3">Log in</h2>
-
-<div class="card p-4 shadow-sm" style="max-width: 420px; margin: 0 auto;">
-  <%= simple_form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
-    <div class="form-inputs">
-      <%= f.input :email,
-                  required: false,
-                  autofocus: true,
-                  input_html: { autocomplete: "email" } %>
-
-      <%= f.input :password,
-                  required: false,
-                  input_html: { autocomplete: "current-password" } %>
-
-      <%= f.input :remember_me, as: :boolean if devise_mapping.rememberable? %>
+        <%= f.submit "Log in", class: "btn button-default w-100 rounded-5 mb-2" %>
+      <% end %>
+      <div class="d-grid gap-3">
+        <%= render "devise/shared/links" %>
+      </div>
     </div>
-
-    <div class="form-actions mt-3">
-      <%= f.button :submit, "Log in", class: "btn btn-primary w-100" %>
-    </div>
-  <% end %>
+  </div>
 </div>
