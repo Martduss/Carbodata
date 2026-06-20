@@ -31,5 +31,8 @@ module CarboData2114
     # config.time_zone = "Central Time (US & Canada)"
     # config.eager_load_paths << Rails.root.join("extras")
     config.active_job.queue_adapter = :solid_queue
+
+    # libvips isn't installed on this machine; ImageMagick (mini_magick) is.
+    config.active_storage.variant_processor = :mini_magick
   end
 end
