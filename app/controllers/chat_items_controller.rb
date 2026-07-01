@@ -19,13 +19,9 @@ class ChatItemsController < ApplicationController
       )
     end
 
-    # Launch async job for streaming LLM response (immediate redirect, no waiting)
-    GenerateLlmResponseJob.perform_later(
-      chat_id: @chat.id,
-      user_message_content: nil,
-      generate_title: true
-    )
-
+    # The LLM response job is triggered by ChatChannel once the chat page's
+    # client has subscribed, to avoid the job broadcasting its response
+    # before the browser has finished loading and subscribing to the stream.
     redirect_to chat_path(@chat)
   end
 end
