@@ -15,18 +15,24 @@
         </li>
 
         <li class="foot-item fab-container">
-          <a class="fab-button"
-             data-bs-toggle="offcanvas"
-             href="#offcanvasAction"
-             role="button"
-             aria-controls="offcanvasAction"
-             aria-label="<%= current_page?(profile_path) ? 'Search' : 'New CarboMeal' %>">
-            <% if current_page?(profile_path) %>
-              <i class="bi bi-search fs-1"></i>
-            <% else %>
+          <% if current_page?(feed_path) %>
+            <%= link_to new_post_path, class: "fab-button", "aria-label": "New CarboMeal" do %>
               <i class="bi bi-plus-lg fs-1"></i>
             <% end %>
-          </a>
+          <% else %>
+            <a class="fab-button"
+               data-bs-toggle="offcanvas"
+               href="#offcanvasAction"
+               role="button"
+               aria-controls="offcanvasAction"
+               aria-label="<%= current_page?(profile_path) ? 'Search' : 'New CarboMeal' %>">
+              <% if current_page?(profile_path) %>
+                <i class="bi bi-search fs-1"></i>
+              <% else %>
+                <i class="bi bi-plus-lg fs-1"></i>
+              <% end %>
+            </a>
+          <% end %>
         </li>
 
         <li class="foot-item">
