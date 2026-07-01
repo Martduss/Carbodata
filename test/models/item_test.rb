@@ -35,7 +35,7 @@ class ItemTest < ActiveSupport::TestCase
 
   test "invalid with indice_gly out of range" do
     item = valid_item
-    item.indice_gly = 0
+    item.indice_gly = -1
     assert_not item.valid?
     item.indice_gly = 101
     assert_not item.valid?
@@ -45,7 +45,7 @@ class ItemTest < ActiveSupport::TestCase
 
   test "invalid with ratio_glucide out of range" do
     item = valid_item
-    item.ratio_glucide = 0
+    item.ratio_glucide = -1
     assert_not item.valid?
     item.ratio_glucide = 101
     assert_not item.valid?

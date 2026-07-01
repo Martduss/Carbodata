@@ -34,15 +34,15 @@ class RecipeTest < ActiveSupport::TestCase
 
   test "valid with indice_gly at boundaries" do
     recipe = valid_recipe
-    recipe.indice_gly = 1
+    recipe.indice_gly = 0
     assert recipe.valid?
     recipe.indice_gly = 100
     assert recipe.valid?
   end
 
-  test "invalid with indice_gly below 1" do
+  test "invalid with indice_gly below 0" do
     recipe = valid_recipe
-    recipe.indice_gly = 0
+    recipe.indice_gly = -1
     assert_not recipe.valid?
     assert recipe.errors[:indice_gly].any?
   end
@@ -63,7 +63,7 @@ class RecipeTest < ActiveSupport::TestCase
 
   test "invalid with ratio_glucide out of range" do
     recipe = valid_recipe
-    recipe.ratio_glucide = 0
+    recipe.ratio_glucide = -1
     assert_not recipe.valid?
     recipe.ratio_glucide = 101
     assert_not recipe.valid?
