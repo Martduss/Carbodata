@@ -3,9 +3,6 @@ import { Controller } from "@hotwired/stimulus"
 export default class extends Controller {
   static targets = ["step"]
 
-  // Fields that don't need validation
-  optionalFields = ["recipe_steps", "recipe_description"]
-
   // Go to next step (with validation)
   goToNext(event) {
     const currentStep = this.stepTargets[event.target.dataset.currentStep]
@@ -29,7 +26,7 @@ export default class extends Controller {
 
     step.querySelectorAll("input, textarea, select").forEach((input) => {
       if (input.type === "hidden") return
-      if (this.optionalFields.includes(input.id)) return
+      if (!input.required) return
 
       input.classList.remove("is-invalid")
 

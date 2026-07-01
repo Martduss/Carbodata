@@ -260,7 +260,7 @@
                   Step 1: Name and Description
                 </h6>
                 <%= f.input :name, placeholder: "Give your recipe a name...", input_html: { class: "placeholder-custom" } %>
-                <%= f.input :description, placeholder: "A brief description of your recipe", input_html: { class: "placeholder-custom" } %>
+                <%= f.input :description, required: false, placeholder: "A brief description of your recipe", input_html: { class: "placeholder-custom" } %>
                 <div class="d-flex justify-content-between mt-3">
                   <button type="button" class="btn btn-outline-secondary rounded-5" data-action="wizard#goToPrevious" data-current-step="1" data-previous-step="0">
                     <i class="fa-solid fa-arrow-left me-2"></i>Back
@@ -279,7 +279,7 @@
                 <h6 class="h-default text-center fw-bold mb-4">
                   Step 2: Instructions and Difficulty
                 </h6>
-                <%= f.input :steps, placeholder: "Step by step instructions for your recipe", input_html: { class: "placeholder-custom", rows: 5 } %>
+                <%= f.input :steps, required: false, placeholder: "Step by step instructions for your recipe", input_html: { class: "placeholder-custom", rows: 5 } %>
                 <%= f.input :difficulty, collection: [1,2,3,4,5], prompt: "1 for very easy, 5 for very difficult", input_html: { class: "form-select custom-font" } %>
                 <div class="d-flex justify-content-between mt-3">
                   <button type="button" class="btn btn-outline-secondary rounded-5" data-action="wizard#goToPrevious" data-current-step="2" data-previous-step="1">

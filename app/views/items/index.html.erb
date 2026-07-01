@@ -133,7 +133,7 @@
                   Step 1: General Information
                 </h6>
                 <%= f.input :name, placeholder: "E.g.: sweet potato, steak, banana...", input_html: { class: "placeholder-custom" } %>
-                <%= f.input :brand, placeholder: "E.g.: Heinz, Kellogg's, Kraft...", input_html: { class: "placeholder-custom" } %>
+                <%= f.input :brand, required: false, placeholder: "E.g.: Heinz, Kellogg's, Kraft...", input_html: { class: "placeholder-custom" } %>
                 <div class="d-flex justify-content-end mt-3">
                   <button type="button" class="btn button-default rounded-5" data-action="wizard#goToNext" data-current-step="0" data-next-step="1">
                     Next<i class="fa-solid fa-arrow-right ms-2"></i>
