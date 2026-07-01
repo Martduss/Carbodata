@@ -4,22 +4,8 @@ class RecipesController < ApplicationController
   before_action :require_owner!, only: [:edit, :update, :destroy]
 
   def index
-    all_recipes = current_user.recipes.order(created_at: :desc).to_a
-
-    if params[:query].present?
-      @recipes = current_user.recipes.search_by_name_description_difficulty_indice_gly(params[:query])
-    else
-      @recipes = all_recipes
-    end
-
-    @latest_recipes    = all_recipes.first(6)
-    @low_gi_recipes    = all_recipes.select { |r| r.indice_gly && r.indice_gly < 55 }
-    @medium_gi_recipes = all_recipes.select { |r| r.indice_gly && r.indice_gly.between?(55, 70) }
-    @high_gi_recipes   = all_recipes.select { |r| r.indice_gly && r.indice_gly > 70 }
-
+    load_index_data
     @recipe = Recipe.new
-    @chat_item = ChatItem.new
-    @items = current_user.items
   end
 
   def show
@@ -27,11 +13,12 @@ class RecipesController < ApplicationController
 
   def create
     @recipe = current_user.recipes.new(recipe_params)
-    
-    if @recipe.save!
+
+    if @recipe.save
       redirect_to recipes_path, notice: "The recipe has been created"
     else
-      render :new, status: :unprocessable_entity
+      load_index_data
+      render :index, status: :unprocessable_entity
     end
   end
 
@@ -66,5 +53,23 @@ class RecipesController < ApplicationController
 
   def require_owner!
     redirect_to recipes_path, alert: "You are not authorized to modify this recipe." unless @recipe.user == current_user
+  end
+
+  def load_index_data
+    all_recipes = current_user.recipes.order(created_at: :desc).to_a
+
+    @recipes = if params[:query].present?
+      current_user.recipes.search_by_name_description_difficulty_indice_gly(params[:query])
+    else
+      all_recipes
+    end
+
+    @latest_recipes    = all_recipes.first(6)
+    @low_gi_recipes    = all_recipes.select { |r| r.indice_gly && r.indice_gly < 55 }
+    @medium_gi_recipes = all_recipes.select { |r| r.indice_gly && r.indice_gly.between?(55, 70) }
+    @high_gi_recipes   = all_recipes.select { |r| r.indice_gly && r.indice_gly > 70 }
+
+    @chat_item = ChatItem.new
+    @items = current_user.items
   end
 end

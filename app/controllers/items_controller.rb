@@ -17,11 +17,13 @@ class ItemsController < ApplicationController
 
   def create
     @item = current_user.items.new(item_params)
-    
+
     if @item.save
       redirect_to items_path, notice: "The CarboDuct has been created"
     else
-      render :new, status: :unprocessable_entity
+      @items = current_user.items
+      @items_by_category = @items.group_by(&:category)
+      render :index, status: :unprocessable_entity
     end
   end
 

@@ -8,8 +8,8 @@ class Item < ApplicationRecord
   has_one_attached :photo
 
   validates :name, presence: true, length: { maximum: 100 }
-  validates :indice_gly, numericality: { only_integer: true, greater_than_or_equal_to: 1, less_than_or_equal_to: 100 }, allow_nil: true
-  validates :ratio_glucide, numericality: { only_integer: true, greater_than_or_equal_to: 1, less_than_or_equal_to: 100 }, allow_nil: true
+  validates :indice_gly, numericality: { only_integer: true, greater_than_or_equal_to: 0, less_than_or_equal_to: 100 }, allow_nil: true
+  validates :ratio_glucide, numericality: { only_integer: true, greater_than_or_equal_to: 0, less_than_or_equal_to: 100 }, allow_nil: true
 
   pg_search_scope :search_by_name_description_difficulty_indice_gly, {
     against: {name: 'A', brand: 'B', category: 'B', indice_gly: 'B', ratio_glucide: 'B'},

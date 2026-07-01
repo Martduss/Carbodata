@@ -2,7 +2,7 @@
   <%= f.input :name, placeholder: "E.g.: sweet potato, steak, banana...", input_html: { class: "placeholder-custom" } %>
   <%= f.input :brand, required: false, placeholder: "E.g.: Heinz, Kellogg's, Kraft...", input_html: { class: "placeholder-custom" } %>
   <%= f.input :category, collection: ["Fruits & Vegetables", "Grains & Legumes", "Dairy & Substitutes", "Meat & Substitutes", "Fats & Oils", "Sweets & Sugars", "Water", "Alcohol", "Sugary Drinks", "Vitamins & Minerals"], prompt: false, input_html: { class: "form-select custom-font" } %>
-  <%= f.input :indice_gly, placeholder: "Between 1 and 100", input_html: { class: "placeholder-custom" } %>
+  <%= f.input :indice_gly, placeholder: "Between 0 and 100", input_html: { class: "placeholder-custom" } %>
   <%= f.input :ratio_glucide, placeholder: "Per 100g. E.g.: 27", input_html: { class: "placeholder-custom" } %>
   <%= f.input :photo, as: :file, required: false %>
   <%= f.submit "Save CarboDuct", class: "btn button-default w-100 rounded-5 mb-2" %>

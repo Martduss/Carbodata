@@ -14,8 +14,8 @@ class Recipe < ApplicationRecord
   }
 
   validates :name, presence: true, length: { maximum: 100 }
-  validates :indice_gly, numericality: { only_integer: true, greater_than_or_equal_to: 1, less_than_or_equal_to: 100 }, allow_nil: true
-  validates :ratio_glucide, numericality: { only_integer: true, greater_than_or_equal_to: 1, less_than_or_equal_to: 100 }, allow_nil: true
+  validates :indice_gly, numericality: { only_integer: true, greater_than_or_equal_to: 0, less_than_or_equal_to: 100 }, allow_nil: true
+  validates :ratio_glucide, numericality: { only_integer: true, greater_than_or_equal_to: 0, less_than_or_equal_to: 100 }, allow_nil: true
   validates :difficulty, numericality: { only_integer: true, greater_than_or_equal_to: 1, less_than_or_equal_to: 5 }, allow_nil: true
 
   # Transformed so the placeholder doesn't ship at its native size (3331x5353px, ~2.8MB) —
