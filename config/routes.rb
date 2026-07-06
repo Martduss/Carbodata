@@ -7,6 +7,8 @@ Rails.application.routes.draw do
   get "feed", to: "pages#feed"
   get "profile", to: "pages#profile"
   get "privacy-policy", to: "pages#privacy_policy"
+  post "demo_login", to: "demo_sessions#create", as: :demo_login
+  delete "demo_logout", to: "demo_sessions#destroy", as: :demo_logout
 
   resources :posts do
     resources :comments, except: [:show, :index, :edit] do

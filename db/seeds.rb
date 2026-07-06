@@ -1,5 +1,14 @@
 require "open-uri"
 
+# This file wipes every user, recipe, item, and post before reseeding — fine
+# for a local/throwaway dev database, catastrophic if run against production
+# (it would delete every real recruiter/user account). Require an explicit
+# opt-in env var so `heroku run rails db:seed` can't do this by accident.
+if Rails.env.production? && ENV["I_KNOW_THIS_WILL_WIPE_PRODUCTION"] != "yes"
+  abort "Refusing to run db:seed in production — this destroys ALL users, recipes, items, and posts.\n" \
+    "If you really mean to wipe and reseed production, rerun with I_KNOW_THIS_WILL_WIPE_PRODUCTION=yes."
+end
+
 puts "Destroying all data..."
 Post.destroy_all
 Recipe.destroy_all
@@ -9,10 +18,15 @@ User.destroy_all
 puts "Creating Users..."
 
 # Existing Users (4 Total)
+# This is the account the "Try the Demo" button signs recruiters into.
+# skip_confirmation! is needed because devise's :confirmable module would
+# otherwise block sign-in until the confirmation email link is clicked.
 user_one = User.find_or_create_by!(email: "martin@gmail.com") do |user|
     user.password = "test2025"
     user.password_confirmation = "test2025"
     user.profile_name = "Martin Abdelkader"
+    user.demo = true
+    user.skip_confirmation!
 end
 
 user_two = User.find_or_create_by!(email: "DJ.amil@hotmail.com") do |user|
@@ -588,6 +602,7 @@ puts "Creating posts..."
 
 # The original 4 posts are created using the existing code style
 Post.create!(
+    title: "Looking for a low-GI CarboDuct",
     content: "Does someone has a CarboDuct with low glycemic index to share?! I'm desesperate",
     up: 45,
     down: 5,
@@ -596,6 +611,7 @@ Post.create!(
 )
 
 Post.create!(
+    title: "New recipe: Turkey Meatballs with Spinach",
     content: "I discovered an amazing recipe, sharing it with you all! Check out my Turkey Meatballs with Spinach in my profile!",
     up: 120,
     down: 3,
@@ -604,6 +620,7 @@ Post.create!(
 )
 
 Post.create!(
+    title: "Hidden sugar in foods",
     content: "Hidden sugar in foods. Let's discuss.",
     up: 15,
     down: 25,
@@ -612,6 +629,7 @@ Post.create!(
 )
 
 Post.create!(
+    title: "New Carrefour product",
     content: "New Carrefour product available, has anyone tried it yet?",
     up: 8,
     down: 0,
@@ -622,6 +640,7 @@ Post.create!(
 # 15 Additional Posts
 Post.create!([
     {
+        title: "Low-GI alternative to white rice?",
         content: "Does anyone have a good alternative to white rice for dinner? Looking for something with a low GI.",
         up: 35,
         down: 2,
@@ -629,6 +648,7 @@ Post.create!([
         created_at: 3.hours.ago
     },
     {
+        title: "Watch out for 'no added sugar' juices",
         content: "Heads up for diabetics: be careful with 'no added sugar' fruit juices, the GI is still high!",
         up: 50,
         down: 1,
@@ -636,6 +656,7 @@ Post.create!([
         created_at: 2.hours.ago
     },
     {
+        title: "Rye bread test",
         content: "Testing rye bread today. The GI is better than standard whole wheat bread. Will keep you posted!",
         up: 22,
         down: 0,
@@ -643,6 +664,7 @@ Post.create!([
         created_at: 1.hour.ago
     },
     {
+        title: "Recipe of the day: Chickpea and feta salad",
         content: "Recipe of the day: Chickpea and feta salad. Simple, quick, and great GI. Posting it soon.",
         up: 78,
         down: 4,
@@ -650,6 +672,7 @@ Post.create!([
         created_at: 45.minutes.ago
     },
     {
+        title: "Blood sugar spikes after breakfast",
         content: "My blood sugar always spikes after breakfast. Any ideas for low GI morning snacks?",
         up: 10,
         down: 5,
@@ -657,6 +680,7 @@ Post.create!([
         created_at: 30.minutes.ago
     },
     {
+        title: "Exercise after meals",
         content: "Exercise after meals really helps regulate blood sugar. Who else does this?",
         up: 60,
         down: 0,
@@ -664,6 +688,7 @@ Post.create!([
         created_at: 20.hours.ago
     },
     {
+        title: "Gluten-free pasta disappointment",
         content: "Disappointed by gluten-free pasta. The taste isn't there. Any brands to recommend?",
         up: 5,
         down: 15,
@@ -671,6 +696,7 @@ Post.create!([
         created_at: 10.hour.ago
     },
     {
+        title: "Raw vs cooked root vegetables",
         content: "Root vegetables (carrots, beets) raw have a much lower GI than cooked. Important info to know!",
         up: 90,
         down: 1,
@@ -678,6 +704,7 @@ Post.create!([
         created_at: 10.hours.ago
     },
     {
+        title: "Dessert recipes with natural sweeteners",
         content: "Looking for dessert recipes with natural sweeteners (stevia, erythritol). Share your best tips!",
         up: 18,
         down: 0,
@@ -685,6 +712,7 @@ Post.create!([
         created_at: 8.minutes.ago
     },
     {
+        title: "The 'cheat meal' myth",
         content: "The 'cheat meal' myth. Is it really beneficial or just an excuse to indulge?",
         up: 40,
         down: 30,
@@ -692,6 +720,7 @@ Post.create!([
         created_at: 5.hours.ago
     },
     {
+        title: "Intermittent fasting and insulin sensitivity",
         content: "Intermittent fasting (IF) trend. What are your results on insulin sensitivity?",
         up: 150,
         down: 10,
@@ -699,6 +728,7 @@ Post.create!([
         created_at: 2.hours.ago
     },
     {
+        title: "Popcorn's glycemic index",
         content: "Watch out for the glycemic index of popcorn. It spikes fast!",
         up: 5,
         down: 2,
@@ -706,6 +736,7 @@ Post.create!([
         created_at: 59.hours.ago
     },
     {
+        title: "It's squash season!",
         content: "It's squash season! Butternut squash is an excellent alternative to potatoes. Low GI.",
         up: 105,
         down: 1,
@@ -713,6 +744,7 @@ Post.create!([
         created_at: 20.hours.ago
     },
     {
+        title: "Legumes are your friends",
         content: "Legumes are your friends: lentils, beans, chickpeas... High in fiber and low GI.",
         up: 70,
         down: 0,
@@ -720,6 +752,7 @@ Post.create!([
         created_at: 2.hours.ago
     },
     {
+        title: "Sugar-free isn't carb-free",
         content: "Quick reminder: 'sugar-free' doesn't mean 'carb-free'. Always check the nutrition label.",
         up: 110,
         down: 5,
@@ -729,3 +762,8 @@ Post.create!([
 ])
 
 puts "Created #{Post.count} posts in total."
+
+# Trims the demo user's recipes/items/posts down to the curated baseline
+# (same logic used for the periodic production reset — see DemoAccount).
+puts "Resetting demo account to its curated baseline..."
+DemoAccount.reset!

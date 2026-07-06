@@ -33,6 +33,7 @@
     </div>
     <% unless user_signed_in? %>
       <div class="hero-buttons">
+        <%= button_to "Try the Demo", demo_login_path, class: "btn button-default btn-signup p-3" %>
         <%= link_to "Sign Up", new_user_registration_path, class: "btn button-default btn-signup p-3" %>
         <%= link_to "Log In", new_user_session_path, class: "btn btn-login p-3" %>
       </div>

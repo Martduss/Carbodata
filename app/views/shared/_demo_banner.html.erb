@@ -1,0 +1,7 @@
+<% if current_user&.demo? %>
+  <div class="alert alert-warning text-center mb-0 rounded-0 py-2" role="status">
+    <i class="fas fa-flask me-1"></i>
+    You're exploring Carbodata on a <strong>demo account</strong> — profile editing is disabled.
+    <%= link_to "Back to homepage", demo_logout_path, data: { turbo_method: :delete }, class: "alert-link ms-1" %>
+  </div>
+<% end %>

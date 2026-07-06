@@ -83,4 +83,30 @@ class Users::RegistrationsControllerTest < ActionDispatch::IntegrationTest
     assert_nil User.find_by(email: "erin@example.com")
     assert_response :unprocessable_entity
   end
+
+  test "the demo account cannot access the edit profile form" do
+    sign_in users(:demo_user)
+
+    get edit_user_registration_path
+
+    assert_redirected_to home_path
+  end
+
+  test "the demo account cannot update its profile" do
+    sign_in users(:demo_user)
+
+    patch user_registration_path, params: { user: { profile_name: "Hacked" } }
+
+    assert_redirected_to home_path
+    assert_not_equal "Hacked", users(:demo_user).reload.profile_name
+  end
+
+  test "the demo account cannot delete itself" do
+    sign_in users(:demo_user)
+
+    delete user_registration_path
+
+    assert_redirected_to home_path
+    assert User.exists?(users(:demo_user).id)
+  end
 end

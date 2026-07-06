@@ -44,12 +44,16 @@
                   <h2 class="hub-username mb-1"><%= current_user.profile_name || current_user.email.split('@').first %></h2>
                   <p class="hub-member-since mb-0">Member since January 2025</p>
                 </div>
-                <%= link_to edit_user_registration_path, class: "btn btn-hub-edit" do %>
-                  <i class="fas fa-user-edit me-2"></i>Edit Profile
+                <% unless current_user.demo? %>
+                  <%= link_to edit_user_registration_path, class: "btn btn-hub-edit" do %>
+                    <i class="fas fa-user-edit me-2"></i>Edit Profile
+                  <% end %>
                 <% end %>
               </div>
-              <%= link_to edit_user_registration_path, class: "btn-hub-edit-icon" do %>
-                <i class="fas fa-pen"></i>
+              <% unless current_user.demo? %>
+                <%= link_to edit_user_registration_path, class: "btn-hub-edit-icon" do %>
+                  <i class="fas fa-pen"></i>
+                <% end %>
               <% end %>
             </div>
 

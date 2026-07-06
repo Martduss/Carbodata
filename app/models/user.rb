@@ -12,6 +12,8 @@ class User < ApplicationRecord
   has_many :votes, dependent: :destroy
   has_one_attached :photo
 
+  scope :demo, -> { where(demo: true) }
+
   attr_accessor :accept_terms
 
   validates :accept_terms, acceptance: true, on: :create

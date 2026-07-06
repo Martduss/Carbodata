@@ -9,3 +9,10 @@ bob:
   encrypted_password: <%= Devise::Encryptor.digest(User, 'password') %>
   profile_name: Bob
   confirmed_at: <%= Time.current %>
+
+demo_user:
+  email: demo@example.com
+  encrypted_password: <%= Devise::Encryptor.digest(User, 'password') %>
+  profile_name: Demo
+  confirmed_at: <%= Time.current %>
+  demo: true
