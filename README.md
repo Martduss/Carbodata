@@ -2,7 +2,23 @@
 
 A full-stack web application that helps people with diabetes discover, create, and manage low-glycemic recipes — powered by an AI assistant that generates personalized meal plans.
 
-> Built as a final project at [Le Wagon](https://www.lewagon.com) coding bootcamp (2 weeks, team of 4).
+## 🚀 Try the Live Demo 🚀
+
+Want to explore the app without setting it up locally? You can try the live demo hosted on Heroku:
+
+👉 **https://carbodata-980524f68da0.herokuapp.com**
+
+Once you're on the homepage, click **"Try the Demo"** to access a pre-configured demo account and start exploring immediately.
+
+![Try the Demo button](docs/screenshots/try_demo.png)
+
+> **Note:** The demo runs on a free Heroku dyno, so the first visit may take a few seconds while the application wakes up.
+
+---
+
+## Screenshots
+
+...
 
 ---
 
