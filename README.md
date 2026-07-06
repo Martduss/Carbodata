@@ -6,7 +6,7 @@ A full-stack web application that helps people with diabetes discover, create, a
 
 Want to explore the app without setting it up locally? You can try the live demo hosted on Heroku:
 
-👉 **https://carbodata-980524f68da0.herokuapp.com**
+👉 **https://carbodata.online**
 
 Once you're on the homepage, click **"Try the Demo"** to access a pre-configured demo account and start exploring immediately.
 
